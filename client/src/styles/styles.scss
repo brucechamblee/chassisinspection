@@ -54,9 +54,10 @@ body {
     border-style: solid;
 }
 
-#checkbox {
-    padding: 70px 0;
-    align-content: center;
+.checkbox {
+    vertical-align: middle;
+    // padding-top: 50px;
+    // text-align: center
 }
 
 li {

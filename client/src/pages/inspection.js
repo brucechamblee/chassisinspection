@@ -296,12 +296,14 @@ class InspectionPage extends Component {
                         </ul>
 
                     </Col>
-                    <Col className="checklist" sm={1} id="checkbox">
+                    <Col className="checkbox" sm={2}>
+                      <h5>Yes</h5>
                       <Switch
                       checked={checked}
                       onChange={checked => this.setState({ checked })}
                       offColor="red"
                       />
+                      <h5>No</h5>
                     </Col>
 
                   </Form.Row>
