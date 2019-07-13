@@ -7,8 +7,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import API from "../utils/API";
-import Header from "../components/Header";
-import BookList from "../components/BookList";
+import Header from "../components/Header/Header";
+import ChassisInspection from "../components/ChassisInspection/ChassisInspection";
 
 class SearchPage extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class SearchPage extends Component {
 
     this.state = {
       validated: false,
-      pageTag: "Search for and Save Books of Interest",
+      pageTag: "This is the Search Page",
       action: "save",
       books: [],
       query: ""
@@ -140,7 +140,7 @@ class SearchPage extends Component {
                 {!this.state.books.length ? (
                   <h2 className="text-center">Search for a Book to Begin!</h2>
                 ) : (
-                  <BookList
+                  <ChassisInspection
                     books={this.state.books}
                     handleBookAction={this.handleBookAction}
                     action={this.state.action}

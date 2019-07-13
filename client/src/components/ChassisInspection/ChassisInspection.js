@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 
-function BookList(props) {
+function ChassisInspection(props) {
   return (
     <ListGroup as="ul">
       {props.books.map(book => (
@@ -71,4 +71,4 @@ function BookList(props) {
   );
 }
 
-export default BookList;
+export default ChassisInspection;

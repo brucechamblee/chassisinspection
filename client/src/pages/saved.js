@@ -5,8 +5,8 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import API from "../utils/API";
-import Header from "../components/Header";
-import BookList from "../components/BookList";
+import Header from "../components/Header/Header";
+import ChassisInspection from "../components/ChassisInspection/ChassisInspection";
 
 class SavedPage extends React.Component {
   constructor(props) {
@@ -64,7 +64,7 @@ class SavedPage extends React.Component {
                 {!this.state.books.length ? (
                   <h2 className="text-center">No Saved Books</h2>
                 ) : (
-                  <BookList
+                  <ChassisInspection
                     books={this.state.books}
                     handleBookAction={this.handleBookAction}
                     action={this.state.action}

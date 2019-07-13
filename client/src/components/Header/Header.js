@@ -8,7 +8,7 @@ function Header(props) {
       <div className="overlay" />
       <div className="heading-content">
         <h1 className="text-center">
-          <strong>Google Books Search</strong>
+          <strong>Elite Chassis Check System</strong>
         </h1>
         <h2 className="text-center">{props.pageTag}</h2>
       </div>

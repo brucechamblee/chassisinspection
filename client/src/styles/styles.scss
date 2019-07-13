@@ -1,0 +1,70 @@
+@import '~bootswatch/dist/spacelab/variables';
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+@import '~bootswatch/dist/spacelab/bootswatch';
+
+@import 'book-list';
+@import 'not-found';
+
+
+body {
+    background-image: url(../assets/img/paper.png);
+}
+
+.jumbotron {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    height: 17.875rem;
+    padding: 0;
+    position: relative;
+
+    .background-image {
+        background-image: url(../assets/img/40_LW_v2_OBJ_FILE_2018-Jun-21_06-11-29PM-000_CustomizedView20269219871-e1529605675650.png);
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: 50%;
+        height: 100%;
+        background-color: #fff;
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.5);
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: auto;
+    }
+
+    .heading-content {
+        color: #fff;
+        position: absolute;
+        text-align: center;
+        top: 6.25rem;
+        width: 100%;
+    }
+
+    h1, h2 {
+        color: #fff;
+    }
+}
+
+.checkList {
+    border-style: solid;
+}
+
+#checkbox {
+    padding: 70px 0;
+    align-content: center;
+}
+
+li {
+    font-size: 12px;
+}
+
+
+.btn {
+    font-variant: small-caps;
+    text-transform: uppercase;
+}
