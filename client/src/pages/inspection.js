@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import Input from "react-bootstrap/Input"
 import Switch from 'react-ios-switch';
 import Button from "react-bootstrap/Button";
 import API from "../utils/API";
@@ -14,64 +15,61 @@ class InspectionPage extends Component {
   constructor(props) {
     super(props);
 
-    this.searchBooks = this.searchBooks.bind(this);
+    // this.searchBooks = this.searchBooks.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleBookAction = this.handleBookAction.bind(this);
+    // this.handleBookAction = this.handleBookAction.bind(this);
 
     this.state = {
       validated: false,
-      pageTag: "Chassis Inspection Form",
-      action: "save",
-      books: [],
-      headerQuery: "",
+      // pageTag: "Chassis Inspection Form",
+      // action: "save",
+      // books: [],
+      // headerQuery: "",
       checked: true,
+      owner: ""
     };
   }
 
-  searchBooks(headerQuery) {
-    console.log(headerQuery);
-    API.searchBooks(headerQuery)
-      .then(res => {
-        console.log(res);
-        const bookList = res.data.map(b => {
-          return {
-            googleId: b.id,
-            title: b.volumeInfo.title,
-            authors: b.volumeInfo.authors,
-            description: b.volumeInfo.description,
-            image: b.volumeInfo.imageLinks.thumbnail,
-            link: b.volumeInfo.infoLink
-          };
-        });
-        this.setState({ books: bookList });
-      })
-      .catch(error => console.log(error));
-  }
+  // searchBooks(headerQuery) {
+  //   console.log(headerQuery);
+  //   API.searchBooks(headerQuery)
+  //     .then(res => {
+  //       console.log(res);
+  //       const bookList = res.data.map(b => {
+  //         return {
+  //           googleId: b.id,
+  //           title: b.volumeInfo.title,
+  //           authors: b.volumeInfo.authors,
+  //           description: b.volumeInfo.description,
+  //           image: b.volumeInfo.imageLinks.thumbnail,
+  //           link: b.volumeInfo.infoLink
+  //         };
+  //       });
+  //       this.setState({ books: bookList });
+  //     })
+  //     .catch(error => console.log(error));
+  // }
 
   handleSubmit(event) {
-    const form = event.currentTarget;
-
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      event.preventDefault();
-      this.setState({ validated: true });
-      this.searchBooks(this.state.query);
+    event.preventDefault();
+    console.log(this.state.owner)
+    this.setState({ validated: true, owner: this.IEPfield });
+    API.saveForm(this.state.owner)
+    // this.searchBooks(this.state.query);
     }
-  }
+ 
 
-  handleInputChange(event) {
-    const { name, value } = event.target;
+  handleInputChange =(event)=>{
+    let { name, value } = event.target;
     this.setState({ [name]: value });
   }
 
-  handleBookAction(book) {
-    API.saveBook(book)
-      .then(() => this.searchBooks(this.state.query))
-      .catch(error => console.log(error));
-  }
+  // handleBookAction(book) {
+  //   API.saveBook(book)
+  //     .then(() => this.searchBooks(this.state.query))
+  //     .catch(error => console.log(error));
+  // }
 
 
 
@@ -107,13 +105,16 @@ class InspectionPage extends Component {
                         <Form.Label>
                           <strong>Owner / IEP</strong>
                         </Form.Label>
-                        <Form.Control
+                        {/* <Input value={this.state.owner} placeholder="Enter Owner / IEP Name" type="email" name="email" id="exampleEmail" placeholder="with a placeholder" /> */}
+
+                        <Form.Input
                           type="text"
+                          value={this.state.owner}
                           placeholder="Enter Owner / IEP Name"
                           name="IEPfield"
                           required
                           onChange={this.handleInputChange}
-                          value={this.state.query}
+                        
                         />
                         <Form.Control.Feedback type="invalid">
                           Please provide a valid information.
@@ -129,8 +130,8 @@ class InspectionPage extends Component {
                           type="text"
                           placeholder="Enter Owner / IEP Address"
                           name="IEPaddressField"
-                          onChange={this.handleInputChange}
-                          value={this.state.query}
+                          // onChange={this.handleInputChange}
+                          // value={this.state.query}
                         />
                         <Form.Control.Feedback type="invalid">
                           Please provide a valid information.
@@ -149,8 +150,8 @@ class InspectionPage extends Component {
                           placeholder="Enter Unit Number"
                           name="unitNumber"
                           required
-                          onChange={this.handleInputChange}
-                          value={this.state.query}
+                          // onChange={this.handleInputChange}
+                          // value={this.state.query}
                         />
                         <Form.Control.Feedback type="invalid">
                           Please provide a valid information.
@@ -167,8 +168,8 @@ class InspectionPage extends Component {
                           placeholder="Enter License"
                           name="license"
                           required
-                          onChange={this.handleInputChange}
-                          value={this.state.query}
+                          // onChange={this.handleInputChange}
+                          // value={this.state.query}
                         />
                         <Form.Control.Feedback type="invalid">
                           Please provide a valid information.
@@ -185,8 +186,8 @@ class InspectionPage extends Component {
                           placeholder="Enter State"
                           name="licenseState"
                           required
-                          onChange={this.handleInputChange}
-                          value={this.state.query}
+                          // onChange={this.handleInputChange}
+                          // value={this.state.query}
                         />
                         <Form.Control.Feedback type="invalid">
                           Please provide a valid information.
@@ -203,8 +204,8 @@ class InspectionPage extends Component {
                           placeholder="Enter License Expiration Date"
                           name="licenseExp"
                           required
-                          onChange={this.handleInputChange}
-                          value={this.state.query}
+                          // onChange={this.handleInputChange}
+                          // value={this.state.query}
                         />
                         <Form.Control.Feedback type="invalid">
                           Please provide a valid information.
@@ -222,8 +223,8 @@ class InspectionPage extends Component {
                           placeholder="Select Configuration Below"
                           name="unitType"
                           required
-                          onChange={this.handleInputChange}
-                          value={this.state.query}
+                          // onChange={this.handleInputChange}
+                          // value={this.state.query}
                         >
                           <option />
                           <option>20' GEN</option>
@@ -259,8 +260,8 @@ class InspectionPage extends Component {
                           type="text"
                           placeholder="Enter Serial Number / VIN"
                           name="serialNumber"
-                          onChange={this.handleInputChange}
-                          value={this.state.query}
+                          // onChange={this.handleInputChange}
+                          // value={this.state.query}
                         />
                         <Form.Control.Feedback type="invalid">
                           Please provide a valid information.
@@ -275,10 +276,10 @@ class InspectionPage extends Component {
 
                   <Form.Row>
                    
-                    <Card.Header className="border-bottom-0 bg-secondary text-white">
-                      <h4>
+                    <Card.Header className="border-bottom-0 bg-secondary text-black">
+                      <h7>
                         <strong>Component Checklist</strong>
-                      </h4>
+                      </h7>
                     </Card.Header>
                   </Form.Row>
                   <br></br>
@@ -328,5 +329,4 @@ class InspectionPage extends Component {
     );
   }
 }
-
 export default InspectionPage;
