@@ -21,6 +21,7 @@ export default {
     // },
 
     saveForm: function(data) {
+        console.log(data)//this.state is making it here!
         return ajax.post('/api/inspection/save', data);
     }
 };
