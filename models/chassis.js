@@ -4,13 +4,36 @@ const Schema = mongoose.Schema;
 
 const ChassisSchema = new Schema({
 
-    chassisNumber:{
-        type: Number,
+    unitNumber:{
+        type: String,
+        required: false
+    },
+    serialNumber: {
+        type: String,
+        required: false
+    },
+    date:{
+        type: Date, 
+        default: Date.now,
         required: true
     },
-    VIN: {
-        type: Number,
+    license: {
+        type: String,
+        required: true,
+    },
+    licensestate: {
+        type: String,
         required: true
+    },
+    licenseExp: {
+        type: String,
+    },
+    unitType: {
+        type: String,
+        required: true
+    },
+    brakesGood: {
+        type: Boolean
     }
 
 })

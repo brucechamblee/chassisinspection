@@ -52,6 +52,7 @@ body {
 
 .checkList {
     border-style: solid;
+    padding: 20px
 }
 
 .checkbox {
@@ -64,7 +65,9 @@ li {
     font-size: 12px;
 }
 
-
+.checklistComment {
+    padding: 10px;
+}
 .btn {
     font-variant: small-caps;
     text-transform: uppercase;

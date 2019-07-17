@@ -6,7 +6,11 @@ const IEPSchema = new Schema({
 
     IEPname:{
         type: String,
-        required: true
+        required: false
+    },
+    IEPaddressField:{
+        type: String,
+        required: false
     },
     brakestroke: {
         type: Schema.Types.ObjectId,
@@ -15,10 +19,6 @@ const IEPSchema = new Schema({
     chassis: {
         type: Schema.Types.ObjectId,
         ref: "Chassis"
-    },
-    header: {
-        type: Schema.Types.ObjectId,
-        ref: "Header"
     },
     inspection: {
             type: Schema.Types.ObjectId,

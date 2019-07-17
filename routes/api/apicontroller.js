@@ -1,6 +1,6 @@
 const express = require("express");
 const router = require("express").Router();
-// const modelController = require("../../controllers/controller")
+const modelController = require("../../controllers/controller")
 
 
 // router.route("/")
@@ -8,9 +8,9 @@ const router = require("express").Router();
 //   .post(modelController.create);
 
 
-router.post("/save", function(req, res){
-console.log(req.body)
-})
+router.route("/save")
+// console.log("This is API Controller" + req.body)
+    .post(modelController.create)
 
 // router.route("/:id")
 //   .get(modelController.findById)
