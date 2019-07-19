@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Switch from "react-ios-switch";
-import Button from "react-bootstrap/Button";
-import Accordion from "react-bootstrap/Accordion";
-import Badge from "react-bootstrap/Badge";
-import API from "../utils/API";
-import Header from "../components/Header/Header";
-import AccordionToggle from "react-bootstrap/AccordionToggle";
-import AccordionCollapse from "react-bootstrap/AccordionCollapse";
+import React, { Component } from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Switch from 'react-ios-switch';
+import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
+import Badge from 'react-bootstrap/Badge';
+import API from '../utils/API';
+// import Header from '../components/Header/Header';
+import AccordionToggle from 'react-bootstrap/AccordionToggle';
+import AccordionCollapse from 'react-bootstrap/AccordionCollapse';
 // import ChassisInspection from "../components/ChassisInspection/ChassisInspection";
 
 class InspectionPage extends Component {
@@ -21,18 +21,38 @@ class InspectionPage extends Component {
     this.handleHeaderInputChange = this.handleHeaderInputChange.bind(this);
 
     this.state = {
-      pageTag: "Chassis Inspection Form",
-      IEPname: "",
-      IEPaddressField: "",
+      pageTag: 'Chassis Inspection Form',
+      IEPname: '',
+      IEPaddressField: '',
       chassis: {
-        unitNumber: "",
-        license: "",
-        licensestate: "",
-        licenseExp: "",
-        unitType: "",
-        serialNumber: "",
-        brakesGood: true,
-        brakeComment: ""
+        unitNumber: '',
+        license: '',
+        licensestate: '',
+        licenseExp: '',
+        unitType: '',
+        serialNumber: ''
+      },
+      inspection: {
+        brakeComment: '',
+        airSysComment: '',
+        suspensionComment: '',
+        couplingComment: '',
+        electricalComment: '',
+        frameComment: '',
+        wheelsComment: '',
+        lubricationComment: '',
+        documentationComment: '',
+        tiresComment: '',
+        brakesCheckGood: true,
+        airSysCheckGood: true,
+        suspensionCheckGood: true,
+        couplingCheckGood: true,
+        electricalCheckGood: true,
+        frameCheckGood: true,
+        wheelsCheckGood: true,
+        lubricationCheckGood: true,
+        documentationCheckGood: true,
+        tiresCheckGood: true
       }
     };
   }
@@ -57,33 +77,50 @@ class InspectionPage extends Component {
     event.preventDefault();
     console.log(this.state);
     this.setState({
-      IEPname: "",
-      IEPaddressField: "",
+      IEPname: '',
+      IEPaddressField: '',
       chassis: {
-        unitNumber: "",
-        license: "",
-        licensestate: "",
-        licenseExp: "",
-        unitType: "",
-        serialNumber: "",
-        brakesGood: true,
-        brakeComment: ""
+        unitNumber: '',
+        license: '',
+        licensestate: '',
+        licenseExp: '',
+        unitType: '',
+        serialNumber: ''
+      },
+      inspection: {
+        brakeComment: '',
+        airSysComment: '',
+        suspensionComment: '',
+        couplingComment: '',
+        electricalComment: '',
+        frameComment: '',
+        wheelsComment: '',
+        lubricationComment: '',
+        documentationComment: '',
+        tiresComment: '',
+        brakesCheckGood: true,
+        airSysCheckGood: true,
+        suspensionCheckGood: true,
+        couplingCheckGood: true,
+        electricalCheckGood: true,
+        frameCheckGood: true,
+        wheelsCheckGood: true,
+        lubricationCheckGood: true,
+        documentationCheckGood: true,
+        tiresCheckGood: true
       }
     });
     API.saveForm(this.state);
   };
 
   render() {
-    const { checked } = this.state;
     return (
       <Container>
         <Row>
+          <Col sm={12}>{/* <Header pageTag={this.state.pageTag} /> */}</Col>
           <Col sm={12}>
-            <Header pageTag={this.state.pageTag} />
-          </Col>
-          <Col sm={12}>
-            <Card className="mt-4 shadow">
-              <Card.Header className="border-bottom-0 bg-secondary text-white">
+            <Card className='mt-4 shadow'>
+              <Card.Header className='border-bottom-0 bg-secondary text-white'>
                 <h3>
                   <strong>FMCSA INTERMODAL CHASSIS INSPECTION FORM</strong>
                 </h3>
@@ -97,36 +134,36 @@ class InspectionPage extends Component {
                 <Form onSubmit={e => this.handleSubmit(e)}>
                   <Form.Row>
                     <Col sm={6}>
-                      <Form.Group controlId="IEPname">
+                      <Form.Group>
                         <Form.Label>
                           <strong>Owner / IEP</strong>
                         </Form.Label>
                         <Form.Control
-                          type="text"
-                          placeholder="Enter Owner / IEP Name"
-                          name="IEPname"
+                          type='text'
+                          placeholder='Enter Owner / IEP Name'
+                          name='IEPname'
                           required
                           onChange={this.handleHeaderInputChange}
                           value={this.state.IEPname}
                         />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           Please provide a valid information.
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                     <Col sm={6}>
-                      <Form.Group controlId="IEPaddressField">
+                      <Form.Group>
                         <Form.Label>
                           <strong>Owner Address</strong>
                         </Form.Label>
                         <Form.Control
-                          type="text"
-                          placeholder="Enter Owner / IEP Address"
-                          name="IEPaddressField"
+                          type='text'
+                          placeholder='Enter Owner / IEP Address'
+                          name='IEPaddressField'
                           onChange={this.handleHeaderInputChange}
                           value={this.state.IEPaddressField}
                         />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           Please provide a valid information.
                         </Form.Control.Feedback>
                       </Form.Group>
@@ -134,87 +171,87 @@ class InspectionPage extends Component {
                   </Form.Row>
                   <Form.Row>
                     <Col sm={6}>
-                      <Form.Group controlId="unitNumber">
+                      <Form.Group>
                         <Form.Label>
                           <strong>Unit Number</strong>
                         </Form.Label>
                         <Form.Control
-                          type="text"
-                          placeholder="Enter Unit Number"
-                          name="unitNumber"
+                          type='text'
+                          placeholder='Enter Unit Number'
+                          name='unitNumber'
                           // required
                           onChange={this.handleChassisInputChange}
                           value={this.state.chassis.unitNumber}
                         />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           Please provide a valid information.
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                     <Col sm={4}>
-                      <Form.Group controlId="license">
+                      <Form.Group>
                         <Form.Label>
                           <strong>License</strong>
                         </Form.Label>
                         <Form.Control
-                          type="text"
-                          placeholder="Enter License"
-                          name="license"
+                          type='text'
+                          placeholder='Enter License'
+                          name='license'
                           // required
                           onChange={this.handleChassisInputChange}
                           value={this.state.chassis.license}
                         />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           Please provide a valid information.
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                     <Col sm={2}>
-                      <Form.Group controlId="licensestate">
+                      <Form.Group>
                         <Form.Label>
                           <strong>State</strong>
                         </Form.Label>
                         <Form.Control
-                          type="text"
-                          placeholder="Enter State"
-                          name="licensestate"
+                          type='text'
+                          placeholder='Enter State'
+                          name='licensestate'
                           // required
                           onChange={this.handleChassisInputChange}
                           value={this.state.chassis.licensestate}
                         />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           Please provide a valid information.
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                     <Col sm={6}>
-                      <Form.Group controlId="licenseExp">
+                      <Form.Group>
                         <Form.Label>
                           <strong>License Expiration Date</strong>
                         </Form.Label>
                         <Form.Control
-                          type="text"
-                          placeholder="Enter License Expiration Date"
-                          name="licenseExp"
+                          type='text'
+                          placeholder='Enter License Expiration Date'
+                          name='licenseExp'
                           // required
                           onChange={this.handleChassisInputChange}
                           value={this.state.licenseExp}
                         />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           Please provide a valid information.
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
 
                     <Col sm={6}>
-                      <Form.Group controlId="unitType">
+                      <Form.Group>
                         <Form.Label>
                           <strong>Unit Type / Configuration</strong>
                         </Form.Label>
                         <Form.Control
-                          as="select"
-                          placeholder="Select Configuration Below"
-                          name="unitType"
+                          as='select'
+                          placeholder='Select Configuration Below'
+                          name='unitType'
                           // required
                           onChange={this.handleChassisInputChange}
                           value={this.state.chassis.unitType}
@@ -245,18 +282,18 @@ class InspectionPage extends Component {
 
                   <Form.Row>
                     <Col sm={6}>
-                      <Form.Group controlId="serialNumber">
+                      <Form.Group>
                         <Form.Label>
                           <strong>Serial Number / VIN</strong>
                         </Form.Label>
                         <Form.Control
-                          type="text"
-                          placeholder="Enter Serial Number / VIN"
-                          name="serialNumber"
+                          type='text'
+                          placeholder='Enter Serial Number / VIN'
+                          name='serialNumber'
                           onChange={this.handleChassisInputChange}
                           value={this.state.chassis.serialNumber}
                         />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           Please provide a valid information.
                         </Form.Control.Feedback>
                       </Form.Group>
@@ -268,30 +305,31 @@ class InspectionPage extends Component {
                   </Form.Row>
 
                   <Form.Row>
-                    <Card.Header className="border-bottom-0 bg-secondary text-white">
+                    <Card.Header className='border-bottom-0 bg-secondary text-white'>
                       <h4>
                         <strong>Component Checklist</strong>
                       </h4>
                     </Card.Header>
                   </Form.Row>
                   <br />
-                  <Container className="checkList">
+                  <Container className='checkList' id='brakes'>
                     <Form.Row>
                       <Col sm={6}>
-                        <Accordion defaultActiveKey="0">
+                        <Accordion defaultActiveKey='0'>
                           <AccordionToggle
                             as={Card.Header}
-                            eventKey="0"
-                            style={{ backgroundColor: "white", border: "none" }}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
                           >
-                            <h5>
-                              BRAKE{" "}
-                              <Badge pill variant="secondary">
-                                Details
-                              </Badge>
-                            </h5>
+                            <h4>BRAKE</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
                           </AccordionToggle>
-                          <AccordionCollapse eventKey="0">
+                          <AccordionCollapse eventKey='0'>
                             <ul>
                               <li>
                                 Service Brakes - No absence of Braking action
@@ -306,7 +344,7 @@ class InspectionPage extends Component {
                               </li>
                               <li>
                                 Check and Adjust travel on Brake Chamber -
-                                Maximum Travel = 2" Measure Travel -{" "}
+                                Maximum Travel = 2" Measure Travel -{' '}
                                 <strong>Record</strong>
                               </li>
                               <li>
@@ -321,39 +359,63 @@ class InspectionPage extends Component {
                           </AccordionCollapse>
                         </Accordion>
                       </Col>
-                      <Col className="checklist" sm={1} id="checkboxBrake">
+                      <Col className='checklist' sm={2} id='brakeCheck'>
+                        <sub>Pass/Fail</sub>
                         <Switch
-                          checked={checked}
-                          name="brakesGood"
-                          onChange={checked => this.setState({ checked })}
-                          offColor="red"
+                          checked={this.state.inspection.brakesCheckGood}
+                          onChange={checked => {
+                            this.setState({
+                              inspection: {
+                                brakesCheckGood: checked
+                              }
+                            });
+                          }}
+                          name='brakesChecked'
+                          offColor='red'
                         />
                       </Col>
-                      <Col className="checklistComment" sm={5} id="commentBox">
-                        <Form.Group controlId="brakeComment">
-                          <Form.Control as="textarea" rows="" />
-                        </Form.Group>
-                      </Col>
+                      {!this.state.inspection.brakesCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group controlId='brakeComment'>
+                            <Form.Control
+                              as='textarea'
+                              rows='3'
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='brakeComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.brakeComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
                     </Form.Row>
                   </Container>
                   <br />
-                  <Container className="checkList">
+                  <Container className='checkList' id='airSys'>
                     <Form.Row>
                       <Col sm={6}>
-                        <Accordion defaultActiveKey="0">
+                        <Accordion defaultActiveKey='0'>
                           <AccordionToggle
                             as={Card.Header}
-                            eventKey="0"
-                            style={{ backgroundColor: "white", border: "none" }}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
                           >
-                            <h5>
-                              AIR SYSTEMS/LINES/HOSES{" "}
-                              <Badge pill variant="secondary">
-                                Details
-                              </Badge>
-                            </h5>
+                            <h4>AIR SYSTEMS / LINES / HOSES</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
                           </AccordionToggle>
-                          <AccordionCollapse eventKey="0">
+                          <AccordionCollapse eventKey='0'>
                             <ul>
                               <li>No Audible air leaks; Drain Air Tanks</li>
                               <li>
@@ -368,27 +430,628 @@ class InspectionPage extends Component {
                           </AccordionCollapse>
                         </Accordion>
                       </Col>
-                      <Col className="checklist" sm={1} id="checkboxAirSys">
+                      <Col className='checklist' sm={2} id='airsysCheck'>
+                        <sub>Pass/Fail</sub>
                         <Switch
-                          checked={checked}
-                          name="airSysGood"
-                          onChange={checked => this.setState({ checked })}
-                          offColor="red"
+                          checked={this.state.inspection.airSysCheckGood}
+                          onChange={checked =>
+                            this.setState({
+                              inspection: { airSysCheckGood: checked }
+                            })
+                          }
+                          name='airSysChecked'
+                          offColor='red'
                         />
                       </Col>
-                      <Col className="checklistComment" sm={5} id="commentBox">
-                        <Form.Group controlId="airSysComment">
-                          <Form.Control as="textarea" rows="" />
-                        </Form.Group>
-                      </Col>
+                      {!this.state.inspection.airSysCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group>
+                            <Form.Control
+                              as='textarea'
+                              rows='3'
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='airSysComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.airSysComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
                     </Form.Row>
                   </Container>
-                  <div className="d-flex justify-content-end">
+                  <br />
+                  <Container className='checkList' id='suspension'>
+                    <Form.Row>
+                      <Col sm={6}>
+                        <Accordion defaultActiveKey='0'>
+                          <AccordionToggle
+                            as={Card.Header}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
+                          >
+                            <h4>SUSPENSION / AXLES</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
+                          </AccordionToggle>
+                          <AccordionCollapse eventKey='0'>
+                            <ul>
+                              <li>
+                                Inspect Ubolts; spring hangers; spring
+                                assemblies; leaves; torque radius or tacking
+                                components, axles or other axle positioning
+                                parts.
+                              </li>
+                              <li>
+                                No cracked, broken, loose or missing parts.
+                              </li>
+                            </ul>
+                          </AccordionCollapse>
+                        </Accordion>
+                      </Col>
+                      <Col className='checklist' sm={2} id='suspensionSysCheck'>
+                        <sub>Pass/Fail</sub>
+                        <Switch
+                          checked={this.state.inspection.suspensionCheckGood}
+                          onChange={checked =>
+                            this.setState({
+                              inspection: { suspensionCheckGood: checked }
+                            })
+                          }
+                          name='suspensionSysCheck'
+                          offColor='red'
+                        />
+                      </Col>
+                      {!this.state.inspection.suspensionCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group>
+                            <Form.Control
+                              as='textarea'
+                              rows='3'
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='suspensionComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.suspensionComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
+                    </Form.Row>
+                  </Container>
+                  <br />
+                  <Container className='checkList' id='coupling'>
+                    <Form.Row>
+                      <Col sm={6}>
+                        <Accordion defaultActiveKey='0'>
+                          <AccordionToggle
+                            as={Card.Header}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
+                          >
+                            <h4>COUPLING / SECUREMENT DEVICES</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
+                          </AccordionToggle>
+                          <AccordionCollapse eventKey='0'>
+                            <ul>
+                              <li>
+                                Inspect Fifth wheel Kingpin, upper coupler
+                                plate, slider, stops and locks, pintie hood,
+                                locking pins, twist locks and safety latches
+                              </li>
+                              <li>
+                                frame member providing support/attachment to
+                                pintle hood; fasteners;
+                              </li>
+                              <li>
+                                No broken or cracked components . No cracked
+                                welds. No excessive wear or chipping of kingpin
+                                lip
+                              </li>
+                            </ul>
+                          </AccordionCollapse>
+                        </Accordion>
+                      </Col>
+                      <Col className='checklist' sm={2} id='couplingCheckGood'>
+                        <sub>Pass/Fail</sub>
+                        <Switch
+                          checked={this.state.inspection.couplingCheckGood}
+                          onChange={checked =>
+                            this.setState({
+                              inspection: { couplingCheckGood: checked }
+                            })
+                          }
+                          name='couplingCheckGood'
+                          offColor='red'
+                        />
+                      </Col>
+                      {!this.state.inspection.couplingCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group>
+                            <Form.Control
+                              as='textarea'
+                              rows='3'
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='couplingComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.couplingComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
+                    </Form.Row>
+                  </Container>
+                  <br />
+                  <Container className='checkList' id='electrical'>
+                    <Form.Row>
+                      <Col sm={6}>
+                        <Accordion defaultActiveKey='0'>
+                          <AccordionToggle
+                            as={Card.Header}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
+                          >
+                            <h4>ELECTRCIAL / LIGHTING/ CONSPICUITY DEVICES</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
+                          </AccordionToggle>
+                          <AccordionCollapse eventKey='0'>
+                            <ul>
+                              <li>
+                                Inspect seven way, wiring harness, lighting
+                                devices and reflectors.
+                              </li>
+                              <li>
+                                No broke, inoperative missing or lose Parts.
+                                Ensure proper Conspicuity installation.
+                              </li>
+                            </ul>
+                          </AccordionCollapse>
+                        </Accordion>
+                      </Col>
+                      <Col
+                        className='checklist'
+                        sm={2}
+                        id='electricalCheckGood'
+                      >
+                        <sub>Pass/Fail</sub>
+                        <Switch
+                          checked={this.state.inspection.electricalCheckGood}
+                          onChange={checked =>
+                            this.setState({
+                              inspection: { electricalCheckGood: checked }
+                            })
+                          }
+                          name='electricalCheckGood'
+                          offColor='red'
+                        />
+                      </Col>
+                      {!this.state.inspection.electricalCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group>
+                            <Form.Control
+                              as='textarea'
+                              rows='3'
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='electricalComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.electricalComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
+                    </Form.Row>
+                  </Container>
+                  <br />
+                  <Container className='checkList' id='frames'>
+                    <Form.Row>
+                      <Col sm={6}>
+                        <Accordion defaultActiveKey='0'>
+                          <AccordionToggle
+                            as={Card.Header}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
+                          >
+                            <h4>FRAMES / SUBFRAME / SLIDER ASSY.</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
+                          </AccordionToggle>
+                          <AccordionCollapse eventKey='0'>
+                            <ul>
+                              <li>
+                                Inspec t main rails, bolsters, crossmembers, ICC
+                                Bumper, Light boxes, mudflap hangers.
+                              </li>
+                              <li>
+                                No cracked welds; No broken, missing loose,
+                                sagging parts, no parts bent to affect mating of
+                                container to chassis
+                              </li>
+                              <li>
+                                Frame members, adjustable axles assemb lies
+                                (sliding subframes) with locking pins, fasteners
+                                attaching any components, all landing gear
+                                compone nts, mud flaps
+                              </li>
+                            </ul>
+                          </AccordionCollapse>
+                        </Accordion>
+                      </Col>
+                      <Col className='checklist' sm={2} id='frameCheckGood'>
+                        <sub>Pass/Fail</sub>
+                        <Switch
+                          checked={this.state.inspection.frameCheckGood}
+                          onChange={checked =>
+                            this.setState({
+                              inspection: { frameCheckGood: checked }
+                            })
+                          }
+                          name='frameCheckGood'
+                          offColor='red'
+                        />
+                      </Col>
+                      {!this.state.inspection.frameCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group>
+                            <Form.Control
+                              as='textarea'
+                              rinspection
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='frameComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.frameComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
+                    </Form.Row>
+                  </Container>
+                  <br />
+                  <Container className='checkList' id='wheels'>
+                    <Form.Row>
+                      <Col sm={6}>
+                        <Accordion defaultActiveKey='0'>
+                          <AccordionToggle
+                            as={Card.Header}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
+                          >
+                            <h4>WHEELS / RIMS</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
+                          </AccordionToggle>
+                          <AccordionCollapse eventKey='0'>
+                            <ul>
+                              <li>
+                                Inspect all wheels, rims, spacers and fasteners,
+                                No missing parts (clamps, nuts, studs, etc.),
+                              </li>
+                              <li>
+                                No bent, broken, cracked, improperly seated
+                                sprung or mismatched parts. No elongated bolt
+                                holes or st ripped parts
+                              </li>
+                            </ul>
+                          </AccordionCollapse>
+                        </Accordion>
+                      </Col>
+                      <Col className='checklist' sm={2} id='wheelsCheckGood'>
+                        <sub>Pass/Fail</sub>
+                        <Switch
+                          checked={this.state.inspection.wheelsCheckGood}
+                          onChange={checked =>
+                            this.setState({
+                              inspection: { wheelsCheckGood: checked }
+                            })
+                          }
+                          name='wheelsCheckGood'
+                          offColor='red'
+                        />
+                      </Col>
+                      {!this.state.inspection.wheelsCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group>
+                            <Form.Control
+                              as='textarea'
+                              rows='3'
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='wheelsComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.wheelsComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
+                    </Form.Row>
+                  </Container>
+                  <br />
+                  <Container className='checkList' id='lubrication'>
+                    <Form.Row>
+                      <Col sm={6}>
+                        <Accordion defaultActiveKey='0'>
+                          <AccordionToggle
+                            as={Card.Header}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
+                          >
+                            <h4>LUBRICATION</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
+                          </AccordionToggle>
+                          <AccordionCollapse eventKey='0'>
+                            <ul>
+                              <li>
+                                Lube all fittings on landing gears, gear boxes,
+                                slack adjusters, brake cams, twist locks,
+                                pushpins, slider mechanisms and sub-frame, add
+                                oil to wheel hubs (if equipped with oil bath
+                                bearings)
+                              </li>
+                            </ul>
+                          </AccordionCollapse>
+                        </Accordion>
+                      </Col>
+                      <Col
+                        className='checklist'
+                        sm={2}
+                        id='lubricationCheckGood'
+                      >
+                        <sub>Pass/Fail</sub>
+                        <Switch
+                          checked={this.state.inspection.lubricationCheckGood}
+                          onChange={checked =>
+                            this.setState({
+                              inspection: { lubricationCheckGood: checked }
+                            })
+                          }
+                          name='lubricationCheckGood'
+                          offColor='red'
+                        />
+                      </Col>
+                      {!this.state.inspection.lubricationCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group>
+                            <Form.Control
+                              as='textarea'
+                              rows='3'
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='lubricationComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.lubricationComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
+                    </Form.Row>
+                  </Container>
+                  <br />
+                  <Container className='checkList' id='documentation'>
+                    <Form.Row>
+                      <Col sm={6}>
+                        <Accordion defaultActiveKey='0'>
+                          <AccordionToggle
+                            as={Card.Header}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
+                          >
+                            <h4>DOCUMENTATION / DECALS</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
+                          </AccordionToggle>
+                          <AccordionCollapse eventKey='0'>
+                            <ul>
+                              <li>
+                                Ensure license plate is current, and that
+                                license plate, registration and chassis are
+                                properly matched.
+                              </li>
+                              <li>
+                                Ensure that current registration and copy of
+                                most current FMSCA inspection is in document
+                                holder.
+                              </li>
+                              <li>
+                                Update decal on inspection plate and any
+                                inspection markings on unit. Ensure unit number
+                                is clearly marked and are correct. Ensure that
+                                mud flaps are int act and secured to chassis.
+                              </li>
+                            </ul>
+                          </AccordionCollapse>
+                        </Accordion>
+                      </Col>
+                      <Col
+                        className='checklist'
+                        sm={2}
+                        id='documentationCheckGood'
+                      >
+                        <sub>Pass/Fail</sub>
+                        <Switch
+                          checked={this.state.inspection.documentationCheckGood}
+                          onChange={checked =>
+                            this.setState({
+                              inspection: { documentationCheckGood: checked }
+                            })
+                          }
+                          name='documentationCheckGood'
+                          offColor='red'
+                        />
+                      </Col>
+                      {!this.state.inspection.documentationCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group>
+                            <Form.Control
+                              as='textarea'
+                              rows='3'
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='documentationComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.documentationComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
+                    </Form.Row>
+                  </Container>
+                  <br />
+                  <Container className='checkList' id='tires'>
+                    <Form.Row>
+                      <Col sm={6}>
+                        <Accordion defaultActiveKey='0'>
+                          <AccordionToggle
+                            as={Card.Header}
+                            eventKey='0'
+                            style={{
+                              backgroundColor: 'white',
+                              border: 'none'
+                            }}
+                          >
+                            <h4>TIRES</h4>
+                            <Badge pill variant='secondary'>
+                              click for details
+                            </Badge>
+                          </AccordionToggle>
+                          <AccordionCollapse eventKey='0'>
+                            <ul>
+                              <li>
+                                Inspect all tires for noticeable leaks, proper
+                                mating, separations, cuts to ply or fabric;
+                              </li>
+                              <li>
+                                No spot on tire with tread depth 2/32" or below
+                                when measured in major tread groove
+                              </li>
+                              <li>Air tires to recommen d air pressure.</li>
+                            </ul>
+                          </AccordionCollapse>
+                        </Accordion>
+                      </Col>
+                      <Col className='checklist' sm={2} id='tiresCheckGood'>
+                        <sub>Pass/Fail</sub>
+                        <Switch
+                          checked={this.state.inspection.tiresCheckGood}
+                          onChange={checked =>
+                            this.setState({
+                              inspection: { tiresCheckGood: checked }
+                            })
+                          }
+                          name='tiresCheckGood'
+                          offColor='red'
+                        />
+                      </Col>
+                      {!this.state.inspection.tiresCheckGood ? (
+                        <Col
+                          className='checklistComment'
+                          sm={4}
+                          id='commentBox'
+                        >
+                          <Form.Group>
+                            <Form.Control
+                              as='textarea'
+                              rows='3'
+                              type='text'
+                              placeholder='Enter Failure Detail'
+                              name='tiresComment'
+                              onChange={this.handleChassisInputChange}
+                              value={this.state.inspection.tiresComment}
+                            />
+                          </Form.Group>
+                        </Col>
+                      ) : (
+                        ''
+                      )}
+                    </Form.Row>
+                  </Container>
+                  <br />
+                  <div className='d-flex justify-content-end'>
                     <Button
-                      varient="danger"
-                      type="submit"
-                      size="lg"
-                      className="shadow"
+                      varient='danger'
+                      type='submit'
+                      size='lg'
+                      className='shadow'
                     >
                       Submit
                     </Button>
