@@ -73,9 +73,18 @@ class InspectionPage extends Component {
     this.setState({ chassis: currentState });
   };
 
+  handleInspectionInputChange = event => {
+    const { inspection } = { ...this.state };
+    const currentState = inspection;
+    const { name, value } = event.target;
+    currentState[name] = value;
+    this.setState({ inspection: currentState });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
+    API.saveForm(this.state);
     this.setState({
       IEPname: '',
       IEPaddressField: '',
@@ -110,7 +119,6 @@ class InspectionPage extends Component {
         tiresCheckGood: true
       }
     });
-    API.saveForm(this.state);
   };
 
   render() {
@@ -380,14 +388,14 @@ class InspectionPage extends Component {
                           sm={4}
                           id='commentBox'
                         >
-                          <Form.Group controlId='brakeComment'>
+                          <Form.Group>
                             <Form.Control
                               as='textarea'
                               rows='3'
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='brakeComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.brakeComment}
                             />
                           </Form.Group>
@@ -456,7 +464,7 @@ class InspectionPage extends Component {
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='airSysComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.airSysComment}
                             />
                           </Form.Group>
@@ -525,7 +533,7 @@ class InspectionPage extends Component {
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='suspensionComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.suspensionComment}
                             />
                           </Form.Group>
@@ -599,7 +607,7 @@ class InspectionPage extends Component {
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='couplingComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.couplingComment}
                             />
                           </Form.Group>
@@ -671,7 +679,7 @@ class InspectionPage extends Component {
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='electricalComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.electricalComment}
                             />
                           </Form.Group>
@@ -746,7 +754,7 @@ class InspectionPage extends Component {
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='frameComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.frameComment}
                             />
                           </Form.Group>
@@ -815,7 +823,7 @@ class InspectionPage extends Component {
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='wheelsComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.wheelsComment}
                             />
                           </Form.Group>
@@ -886,7 +894,7 @@ class InspectionPage extends Component {
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='lubricationComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.lubricationComment}
                             />
                           </Form.Group>
@@ -966,7 +974,7 @@ class InspectionPage extends Component {
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='documentationComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.documentationComment}
                             />
                           </Form.Group>
@@ -1035,7 +1043,7 @@ class InspectionPage extends Component {
                               type='text'
                               placeholder='Enter Failure Detail'
                               name='tiresComment'
-                              onChange={this.handleChassisInputChange}
+                              onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.tiresComment}
                             />
                           </Form.Group>

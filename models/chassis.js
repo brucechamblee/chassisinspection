@@ -14,22 +14,22 @@ const ChassisSchema = new Schema({
   date: {
     type: Date,
     default: Date.now,
-    required: true
+    required: false
   },
   license: {
     type: String,
-    required: true
+    required: false
   },
   licensestate: {
     type: String,
-    required: true
+    required: false
   },
   licenseExp: {
     type: String
   },
   unitType: {
     type: String,
-    required: true
+    required: false
   }
 });
 

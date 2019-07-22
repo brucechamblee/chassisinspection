@@ -5,51 +5,51 @@ const Schema = mongoose.Schema;
 const InspectionSchema = new Schema({
   brakesCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
 
   airSysCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
   suspensionCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
 
   couplingCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
 
   electricalCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
 
   frameCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
 
   wheelsCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
 
   lubricationCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
 
   documentationCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
 
   tiresCheckGood: {
     type: Boolean,
-    required: true
+    required: false
   },
   brakeComment: {
     type: String

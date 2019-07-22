@@ -2,9 +2,7 @@ const express = require('express');
 const router = require('express').Router();
 const modelController = require('../../controllers/controller');
 
-// router.route("/")
-//   .get(modelController.findAll)
-//   .post(modelController.create);
+router.route('/').get(modelController.findAll);
 
 router
   .route('/save')

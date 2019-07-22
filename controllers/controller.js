@@ -1,11 +1,13 @@
 const { IEP, Chassis, Inspection } = require('../models');
 
 module.exports = {
-  // findAll: function(req, res) {
-  //   db.IEP.find(req.query)
-  //     .then(iep => res.json(iep))
-  //     .catch(err => res.status(422).json(err));
-  // },
+  findAll: function(req, res) {
+    IEP.find({})
+      .populate('chassis')
+      .populate('inspection')
+      .then(iep => res.json(iep))
+      .catch(err => res.status(422).json(err));
+  },
   // findById: function(req, res) {
   //   db.IEP.findById(req.params.id)
   //     .then(iep => res.json(iep))
