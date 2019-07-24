@@ -4,7 +4,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import API from '../utils/API';
-// import Header from '../components/Header/Header';
 import ChassisInspection from '../components/ChassisInspection/ChassisInspection';
 
 class SearchIEPPage extends React.Component {
@@ -37,7 +36,7 @@ class SearchIEPPage extends React.Component {
         <Row>
           <Col md={12}>
             <Card className='mt-4 shadow'>
-              <Card.Header className='border-bottom-0 bg-primary text-white'>
+              <Card.Header className='border-bottom-0 bg-secondary text-white'>
                 <h3>
                   <strong>Results</strong>
                 </h3>

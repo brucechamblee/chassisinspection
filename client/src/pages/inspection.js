@@ -18,7 +18,7 @@ class InspectionPage extends Component {
   constructor(props) {
     super(props);
 
-    this.handleHeaderInputChange = this.handleHeaderInputChange.bind(this);
+    // this.handleHeaderInputChange = this.handleHeaderInputChange.bind(this);
 
     this.state = {
       pageTag: 'Chassis Inspection Form',
@@ -84,40 +84,41 @@ class InspectionPage extends Component {
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
-    API.saveForm(this.state);
-    this.setState({
-      IEPname: '',
-      IEPaddressField: '',
-      chassis: {
-        unitNumber: '',
-        license: '',
-        licensestate: '',
-        licenseExp: '',
-        unitType: '',
-        serialNumber: ''
-      },
-      inspection: {
-        brakeComment: '',
-        airSysComment: '',
-        suspensionComment: '',
-        couplingComment: '',
-        electricalComment: '',
-        frameComment: '',
-        wheelsComment: '',
-        lubricationComment: '',
-        documentationComment: '',
-        tiresComment: '',
-        brakesCheckGood: true,
-        airSysCheckGood: true,
-        suspensionCheckGood: true,
-        couplingCheckGood: true,
-        electricalCheckGood: true,
-        frameCheckGood: true,
-        wheelsCheckGood: true,
-        lubricationCheckGood: true,
-        documentationCheckGood: true,
-        tiresCheckGood: true
-      }
+    API.saveForm(this.state).then(() => {
+      this.setState({
+        IEPname: '',
+        IEPaddressField: '',
+        chassis: {
+          unitNumber: '',
+          license: '',
+          licensestate: '',
+          licenseExp: '',
+          unitType: '',
+          serialNumber: ''
+        },
+        inspection: {
+          brakeComment: '',
+          airSysComment: '',
+          suspensionComment: '',
+          couplingComment: '',
+          electricalComment: '',
+          frameComment: '',
+          wheelsComment: '',
+          lubricationComment: '',
+          documentationComment: '',
+          tiresComment: '',
+          brakesCheckGood: true,
+          airSysCheckGood: true,
+          suspensionCheckGood: true,
+          couplingCheckGood: true,
+          electricalCheckGood: true,
+          frameCheckGood: true,
+          wheelsCheckGood: true,
+          lubricationCheckGood: true,
+          documentationCheckGood: true,
+          tiresCheckGood: true
+        }
+      });
     });
   };
 
@@ -372,11 +373,9 @@ class InspectionPage extends Component {
                         <Switch
                           checked={this.state.inspection.brakesCheckGood}
                           onChange={checked => {
-                            this.setState({
-                              inspection: {
-                                brakesCheckGood: checked
-                              }
-                            });
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.brakesCheckGood = checked;
+                            this.setState(stateSnapShot);
                           }}
                           name='brakesChecked'
                           offColor='red'
@@ -442,11 +441,11 @@ class InspectionPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.airSysCheckGood}
-                          onChange={checked =>
-                            this.setState({
-                              inspection: { airSysCheckGood: checked }
-                            })
-                          }
+                          onChange={checked => {
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.airSysCheckGood = checked;
+                            this.setState(stateSnapShot);
+                          }}
                           name='airSysChecked'
                           offColor='red'
                         />
@@ -511,11 +510,11 @@ class InspectionPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.suspensionCheckGood}
-                          onChange={checked =>
-                            this.setState({
-                              inspection: { suspensionCheckGood: checked }
-                            })
-                          }
+                          onChange={checked => {
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.suspensionCheckGood = checked;
+                            this.setState(stateSnapShot);
+                          }}
                           name='suspensionSysCheck'
                           offColor='red'
                         />
@@ -585,11 +584,11 @@ class InspectionPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.couplingCheckGood}
-                          onChange={checked =>
-                            this.setState({
-                              inspection: { couplingCheckGood: checked }
-                            })
-                          }
+                          onChange={checked => {
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.couplingCheckGood = checked;
+                            this.setState(stateSnapShot);
+                          }}
                           name='couplingCheckGood'
                           offColor='red'
                         />
@@ -657,11 +656,11 @@ class InspectionPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.electricalCheckGood}
-                          onChange={checked =>
-                            this.setState({
-                              inspection: { electricalCheckGood: checked }
-                            })
-                          }
+                          onChange={checked => {
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.electricalCheckGood = checked;
+                            this.setState(stateSnapShot);
+                          }}
                           name='electricalCheckGood'
                           offColor='red'
                         />
@@ -732,11 +731,11 @@ class InspectionPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.frameCheckGood}
-                          onChange={checked =>
-                            this.setState({
-                              inspection: { frameCheckGood: checked }
-                            })
-                          }
+                          onChange={checked => {
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.frameCheckGood = checked;
+                            this.setState(stateSnapShot);
+                          }}
                           name='frameCheckGood'
                           offColor='red'
                         />
@@ -801,11 +800,11 @@ class InspectionPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.wheelsCheckGood}
-                          onChange={checked =>
-                            this.setState({
-                              inspection: { wheelsCheckGood: checked }
-                            })
-                          }
+                          onChange={checked => {
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.wheelsCheckGood = checked;
+                            this.setState(stateSnapShot);
+                          }}
                           name='wheelsCheckGood'
                           offColor='red'
                         />
@@ -872,11 +871,11 @@ class InspectionPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.lubricationCheckGood}
-                          onChange={checked =>
-                            this.setState({
-                              inspection: { lubricationCheckGood: checked }
-                            })
-                          }
+                          onChange={checked => {
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.lubricationCheckGood = checked;
+                            this.setState(stateSnapShot);
+                          }}
                           name='lubricationCheckGood'
                           offColor='red'
                         />
@@ -952,11 +951,11 @@ class InspectionPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.documentationCheckGood}
-                          onChange={checked =>
-                            this.setState({
-                              inspection: { documentationCheckGood: checked }
-                            })
-                          }
+                          onChange={checked => {
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.documentationCheckGood = checked;
+                            this.setState(stateSnapShot);
+                          }}
                           name='documentationCheckGood'
                           offColor='red'
                         />
@@ -1021,11 +1020,11 @@ class InspectionPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.tiresCheckGood}
-                          onChange={checked =>
-                            this.setState({
-                              inspection: { tiresCheckGood: checked }
-                            })
-                          }
+                          onChange={checked => {
+                            const stateSnapShot = this.state.inspection;
+                            stateSnapShot.tiresCheckGood = checked;
+                            this.setState(stateSnapShot);
+                          }}
                           name='tiresCheckGood'
                           offColor='red'
                         />

@@ -1,49 +1,44 @@
-import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import API from "../utils/API";
-import Header from "../components/Header/Header";
-import ChassisInspection from "../components/ChassisInspection/ChassisInspection";
+import React, { Component } from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import API from '../utils/API';
+import Header from '../components/Header/Header';
+import ChassisInspection from '../components/ChassisInspection/ChassisInspection';
 
 class SearchPage extends Component {
   constructor(props) {
     super(props);
 
-    this.searchBooks = this.searchBooks.bind(this);
+    this.searchIEP = this.searchIEP.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBookAction = this.handleBookAction.bind(this);
 
     this.state = {
+      allowNew: false,
+      isLoading: false,
+      multiple: false,
+      options: [],
       validated: false,
-      pageTag: "This is the Search Page",
-      action: "save",
-      books: [],
-      query: ""
+      pageTag: 'This is the Search Page',
+      action: 'save',
+      ieps: [],
+      query: ''
     };
   }
 
-  searchBooks(query) {
-    console.log(query)
-    API.searchBooks(query)
+  searchIEP(query) {
+    console.log(query);
+    API.getSavedIEPName(query)
       .then(res => {
-        console.log(res)
-        const bookList = res.data.map(b => {
-          return {
-            googleId: b.id,
-            title: b.volumeInfo.title,
-            authors: b.volumeInfo.authors,
-            description: b.volumeInfo.description,
-            image: b.volumeInfo.imageLinks.thumbnail,
-            link: b.volumeInfo.infoLink
-          };
-        });
-        this.setState({ books: bookList });
+        console.log(res);
+        const iepList = res.data;
+        this.setState({ ieps: iepList });
       })
       .catch(error => console.log(error));
   }
@@ -57,7 +52,7 @@ class SearchPage extends Component {
     } else {
       event.preventDefault();
       this.setState({ validated: true });
-      this.searchBooks(this.state.query);
+      this.searchIEP(this.state.query);
     }
   }
 
@@ -66,9 +61,9 @@ class SearchPage extends Component {
     this.setState({ [name]: value });
   }
 
-  handleBookAction(book) {
-    API.saveBook(book)
-      .then(() => this.searchBooks(this.state.query))
+  handleBookAction(ieps) {
+    API.saveBook(ieps)
+      .then(() => this.searchIEP(this.state.query))
       .catch(error => console.log(error));
   }
 
@@ -81,11 +76,12 @@ class SearchPage extends Component {
             <Header pageTag={this.state.pageTag} />
           </Col>
           <Col md={12}>
-            <Card className="mt-4 shadow">
-              <Card.Header className="border-bottom-0 bg-primary text-white">
+            <Card className='mt-4 shadow'>
+              <Card.Header className='border-bottom-0 bg-secondary text-white'>
                 <h3>
                   <strong>
-                    <FontAwesomeIcon icon="book" /> Book Search
+                    {/* <FontAwesomeIcon icon='search' />  */}
+                    IEP Search
                   </strong>
                 </h3>
               </Card.Header>
@@ -95,28 +91,28 @@ class SearchPage extends Component {
                   validated={validated}
                   onSubmit={e => this.handleSubmit(e)}
                 >
-                  <Form.Group controlId="query">
+                  <Form.Group controlId='query'>
                     <Form.Label>
                       <strong>Search</strong>
                     </Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="Enter a search term (Book or Writer)"
-                      name="query"
+                      type='text'
+                      placeholder='Enter a IEP Name'
+                      name='query'
                       required
                       onChange={this.handleInputChange}
                       value={this.state.query}
                     />
-                    <Form.Control.Feedback type="invalid">
+                    <Form.Control.Feedback type='invalid'>
                       Please provide a valid search phrase.
                     </Form.Control.Feedback>
                   </Form.Group>
-                  <div className="d-flex justify-content-end">
+                  <div className='d-flex justify-content-end'>
                     <Button
-                      varient="danger"
-                      type="submit"
-                      size="lg"
-                      className="shadow"
+                      varient='danger'
+                      type='submit'
+                      size='lg'
+                      className='shadow'
                     >
                       Search
                     </Button>
@@ -128,20 +124,20 @@ class SearchPage extends Component {
         </Row>
         <Row>
           <Col md={12}>
-            <Card className="mt-4 shadow">
-              <Card.Header className="border-bottom-0 bg-primary text-white">
+            <Card className='mt-4 shadow'>
+              <Card.Header className='border-bottom-0 bg-secondary text-white'>
                 <h3>
                   <strong>
-                    <FontAwesomeIcon icon="list-alt" /> Results
+                    <FontAwesomeIcon icon='list-alt' /> Results
                   </strong>
                 </h3>
               </Card.Header>
               <Card.Body>
-                {!this.state.books.length ? (
-                  <h2 className="text-center">Search for a Book to Begin!</h2>
+                {!this.state.ieps.length ? (
+                  <h2 className='text-center'>Search for a IEP to Begin!</h2>
                 ) : (
                   <ChassisInspection
-                    books={this.state.books}
+                    iepList={this.state.ieps}
                     handleBookAction={this.handleBookAction}
                     action={this.state.action}
                   />

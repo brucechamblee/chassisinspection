@@ -15,6 +15,9 @@ export default {
     return ajax.get('/api/inspection');
   },
 
+  getSavedIEPName: function(query) {
+    return ajax.get('/api/inspection/name/' + query);
+  },
   // deleteBook: function(id) {
   //     return ajax.delete(`/api/books/${id}`);
   // },

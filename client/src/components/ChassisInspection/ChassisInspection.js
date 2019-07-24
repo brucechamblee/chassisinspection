@@ -1,8 +1,8 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-// import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import moment from 'moment';
 
 function ChassisInspection(props) {
   return (
@@ -17,13 +17,13 @@ function ChassisInspection(props) {
               <h3 className='IEPUnitNumber'>{iepList.chassis.unitNumber}</h3>
             </Col>
             <Col md={4}>
-              <h3 className='ServiceDate'>{iepList.chassis.date}</h3>
+              <h3 className='ServiceDate'>
+                {moment(iepList.chassis.date).format('MM-DD-YYYY')}
+              </h3>
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
-              {/* <p className='book-list__authors'>Written by</p> */}
-            </Col>
+            <Col md={6} />
           </Row>
         </ListGroup.Item>
       ))}
