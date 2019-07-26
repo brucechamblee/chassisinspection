@@ -7,12 +7,12 @@ const ajax = axios.create({
 });
 
 export default {
-  // searchBooks: function(query) {
-  //     return ajax.get('/api/google', { params: { q: query } });
-  // },
+  getIEPDetail: function(query) {
+    return ajax.get('/api/inspection/iepdata/' + query);
+  },
 
   getSavedIEP: function() {
-    return ajax.get('/api/inspection');
+    return ajax.get('/api/inspection/');
   },
 
   getSavedIEPName: function(query) {

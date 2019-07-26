@@ -6,9 +6,11 @@ router.route('/').get(modelController.findAll);
 
 router.route('/name/:query').get(modelController.findbyName);
 
+router.route('/iepdata/:id').get(modelController.findById);
+
 router
   .route('/save')
-  // console.log("This is API Controller" + req.body)
+
   .post(modelController.create);
 
 // router.route("/:id")
