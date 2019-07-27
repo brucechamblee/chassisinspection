@@ -39,7 +39,7 @@ class FMCSAPage extends Component {
         lubricationComment: '',
         documentationComment: '',
         tiresComment: '',
-        brakesCheckGood: false,
+        brakesCheckGood: true,
         airSysCheckGood: true,
         suspensionCheckGood: true,
         couplingCheckGood: true,
@@ -53,7 +53,7 @@ class FMCSAPage extends Component {
     };
   }
 
-  searchId = this.props.match.params.id;
+  // searchId = this.props.match.params.id;
 
   componentDidMount() {
     this.IEPDetail(this.props.match.params.id);
@@ -68,10 +68,10 @@ class FMCSAPage extends Component {
     });
   }
 
-  handleSubmit = event => {
+  handleEmail = event => {
     event.preventDefault();
-    console.log(this.state);
-    API.saveForm(this.state).then(() => {
+    // console.log(this.state);
+    API.emailForm(this.state).then(() => {
       this.setState({});
     });
   };
@@ -94,14 +94,14 @@ class FMCSAPage extends Component {
                 </p>
               </Card.Header>
               <Card.Body>
-                <Form onSubmit={e => this.handleSubmit(e)}>
+                <Form onSubmit={e => this.handleEmail(e)}>
                   <Form.Row>
                     <Col sm={6}>
                       <Form.Group>
                         <Form.Label>
                           <strong>Owner / IEP</strong>
                         </Form.Label>
-                        <Form.Control value={this.state.IEPname} />
+                        <Form.Control value={this.state.IEPname} readOnly />
                       </Form.Group>
                     </Col>
                     <Col sm={6}>
@@ -109,7 +109,10 @@ class FMCSAPage extends Component {
                         <Form.Label>
                           <strong>Owner Address</strong>
                         </Form.Label>
-                        <Form.Control value={this.state.IEPaddressField} />
+                        <Form.Control
+                          value={this.state.IEPaddressField}
+                          readOnly
+                        />
                       </Form.Group>
                     </Col>
                   </Form.Row>
@@ -119,7 +122,10 @@ class FMCSAPage extends Component {
                         <Form.Label>
                           <strong>Unit Number</strong>
                         </Form.Label>
-                        <Form.Control value={this.state.chassis.unitNumber} />
+                        <Form.Control
+                          value={this.state.chassis.unitNumber}
+                          readOnly
+                        />
                       </Form.Group>
                     </Col>
                     <Col sm={4}>
@@ -127,7 +133,10 @@ class FMCSAPage extends Component {
                         <Form.Label>
                           <strong>License</strong>
                         </Form.Label>
-                        <Form.Control value={this.state.chassis.license} />
+                        <Form.Control
+                          value={this.state.chassis.license}
+                          readOnly
+                        />
                       </Form.Group>
                     </Col>
                     <Col sm={2}>
@@ -135,7 +144,10 @@ class FMCSAPage extends Component {
                         <Form.Label>
                           <strong>State</strong>
                         </Form.Label>
-                        <Form.Control value={this.state.chassis.licensestate} />
+                        <Form.Control
+                          value={this.state.chassis.licensestate}
+                          readOnly
+                        />
                       </Form.Group>
                     </Col>
                     <Col sm={6}>
@@ -143,7 +155,10 @@ class FMCSAPage extends Component {
                         <Form.Label>
                           <strong>License Expiration Date</strong>
                         </Form.Label>
-                        <Form.Control value={this.state.chassis.licenseExp} />
+                        <Form.Control
+                          value={this.state.chassis.licenseExp}
+                          readOnly
+                        />
                       </Form.Group>
                     </Col>
 
@@ -152,7 +167,10 @@ class FMCSAPage extends Component {
                         <Form.Label>
                           <strong>Unit Type / Configuration</strong>
                         </Form.Label>
-                        <Form.Control value={this.state.chassis.unitType} />
+                        <Form.Control
+                          value={this.state.chassis.unitType}
+                          readOnly
+                        />
                       </Form.Group>
                     </Col>
                   </Form.Row>
@@ -163,7 +181,10 @@ class FMCSAPage extends Component {
                         <Form.Label>
                           <strong>Serial Number / VIN</strong>
                         </Form.Label>
-                        <Form.Control value={this.state.chassis.serialNumber} />
+                        <Form.Control
+                          value={this.state.chassis.serialNumber}
+                          readOnly
+                        />
                       </Form.Group>
                     </Col>
                   </Form.Row>
@@ -232,6 +253,7 @@ class FMCSAPage extends Component {
                         <Switch
                           checked={this.state.inspection.brakesCheckGood}
                           offColor='red'
+                          readOnly
                         />
                       </Col>
                       {!this.state.inspection.brakesCheckGood ? (
@@ -245,6 +267,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               rows='10'
                               value={this.state.inspection.brakeComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>
@@ -290,6 +313,7 @@ class FMCSAPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.airSysCheckGood}
+                          readOnly
                           offColor='red'
                         />
                       </Col>
@@ -304,6 +328,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               rows='10'
                               value={this.state.inspection.airSysComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>
@@ -349,6 +374,7 @@ class FMCSAPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.suspensionCheckGood}
+                          readOnly
                           offColor='red'
                         />
                       </Col>
@@ -363,6 +389,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               rows='10'
                               value={this.state.inspection.suspensionComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>
@@ -413,6 +440,7 @@ class FMCSAPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.couplingCheckGood}
+                          readOnly
                           offColor='red'
                         />
                       </Col>
@@ -427,6 +455,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               rows='10'
                               value={this.state.inspection.couplingComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>
@@ -475,6 +504,7 @@ class FMCSAPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.electricalCheckGood}
+                          readOnly
                           offColor='red'
                         />
                       </Col>
@@ -489,6 +519,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               rows='10'
                               value={this.state.inspection.electricalComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>
@@ -540,6 +571,7 @@ class FMCSAPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.frameCheckGood}
+                          readOnly
                           offColor='red'
                         />
                       </Col>
@@ -554,6 +586,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               row='10'
                               value={this.state.inspection.frameComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>
@@ -599,6 +632,7 @@ class FMCSAPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.wheelsCheckGood}
+                          readOnly
                           offColor='red'
                         />
                       </Col>
@@ -613,6 +647,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               rows='10'
                               value={this.state.inspection.wheelsComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>
@@ -660,6 +695,7 @@ class FMCSAPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.lubricationCheckGood}
+                          readOnly
                           offColor='red'
                         />
                       </Col>
@@ -674,6 +710,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               rows='10'
                               value={this.state.inspection.lubricationComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>
@@ -730,6 +767,7 @@ class FMCSAPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.documentationCheckGood}
+                          readOnly
                           offColor='red'
                         />
                       </Col>
@@ -744,6 +782,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               rows='10'
                               value={this.state.inspection.documentationComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>
@@ -789,6 +828,7 @@ class FMCSAPage extends Component {
                         <sub>Pass/Fail</sub>
                         <Switch
                           checked={this.state.inspection.tiresCheckGood}
+                          readOnly
                           offColor='red'
                         />
                       </Col>
@@ -803,6 +843,7 @@ class FMCSAPage extends Component {
                               as='textarea'
                               rows='10'
                               value={this.state.inspection.tiresComment}
+                              readOnly
                             />
                           </Form.Group>
                         </Col>

@@ -2,7 +2,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Link from 'react-router-dom/Link';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 function ChassisInspection(props) {

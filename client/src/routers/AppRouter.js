@@ -7,6 +7,7 @@ import SearchPage from '../pages/search';
 import SearchIEPPage from '../pages/SearchIEPPage';
 import NotFound from '../pages/NotFound';
 import FMCSAPage from '../pages/FMCSAForm';
+import WelcomePage from '../pages/Welcome';
 
 function AppRouter() {
   return (
@@ -14,7 +15,8 @@ function AppRouter() {
       <React.Fragment>
         <AppNav />
         <Switch>
-          <Route exact path='/' component={InspectionPage} />
+          <Route exact path='/' component={WelcomePage} />
+          <Route exact path='/inspection' component={InspectionPage} />
           <Route exact path='/search/' component={SearchPage} />
           <Route exact path='/searchiep' component={SearchIEPPage} />
           <Route exact path='/fmcsaform/:id' component={FMCSAPage} />

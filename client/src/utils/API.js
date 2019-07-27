@@ -25,5 +25,10 @@ export default {
   saveForm: function(data) {
     console.log(data); //this.state is making it here!
     return ajax.post('/api/inspection/save', data);
+  },
+
+  emailForm: function(data) {
+    // console.log('This is the email submit' + data); //this is the email submit console
+    return ajax.post('/api/inspection/email', data);
   }
 };

@@ -13,7 +13,12 @@ function AppNav() {
         <Navbar.Toggle aria-controls='books-navbar-nav' />
         <Navbar.Collapse id='books-navbar-nav'>
           <Nav className='mr-auto'>
-            <NavLink exact to='/' activeClassName='active' className='nav-link'>
+            <NavLink
+              exact
+              to='/inspection'
+              activeClassName='active'
+              className='nav-link'
+            >
               Inspection Form
             </NavLink>
             <NavLink

@@ -1,9 +1,9 @@
-const express = require ("express");
+const express = require('express');
 const app = express();
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const PORT = process.env.PORT || 8000;
-
-const routes = require('./routes')
+// console.log(process.env);
+const routes = require('./routes');
 
 //middleware
 //express urlencoded
@@ -12,17 +12,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //static folder
-if(process.env.NODE_ENV === 'production'){
-  app.use(express.static("client/build"))
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
 }
 
-app.use(routes)
+app.use(routes);
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/chassisinspection", {useNewUrlParser: true});
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/chassisinspection',
+  { useNewUrlParser: true }
+);
 
-app.listen(PORT, ()=>{
-  console.log(`app listening on port ${PORT}`)
-})
-
-
-
+app.listen(PORT, () => {
+  console.log(`app listening on port ${PORT}`);
+});

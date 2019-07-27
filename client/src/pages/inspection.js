@@ -9,7 +9,6 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Badge from 'react-bootstrap/Badge';
 import API from '../utils/API';
-// import Header from '../components/Header/Header';
 import AccordionToggle from 'react-bootstrap/AccordionToggle';
 import AccordionCollapse from 'react-bootstrap/AccordionCollapse';
 // import ChassisInspection from "../components/ChassisInspection/ChassisInspection";
