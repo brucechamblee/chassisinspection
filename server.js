@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 8000;
-// console.log(process.env);
+const awsRoute = require('./controllers/awsController');
 const routes = require('./routes');
 
 //middleware
@@ -17,6 +17,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(routes);
+app.use(awsRoute);
 
 mongoose.connect(
   process.env.MONGODB_URI || 'mongodb://localhost/chassisinspection',
