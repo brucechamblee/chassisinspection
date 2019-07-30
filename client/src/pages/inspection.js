@@ -11,15 +11,17 @@ import Badge from 'react-bootstrap/Badge';
 import API from '../utils/API';
 import AccordionToggle from 'react-bootstrap/AccordionToggle';
 import AccordionCollapse from 'react-bootstrap/AccordionCollapse';
-// import ChassisInspection from "../components/ChassisInspection/ChassisInspection";
+import axios from 'axios';
+// import $ from 'jquery';
 
 class InspectionPage extends Component {
   constructor(props) {
     super(props);
 
-    // this.handleHeaderInputChange = this.handleHeaderInputChange.bind(this);
-
     this.state = {
+      selectedFile: null,
+      selectedFiles: null,
+      loading: false,
       pageTag: 'Chassis Inspection Form',
       IEPname: '',
       IEPaddressField: '',
@@ -52,7 +54,9 @@ class InspectionPage extends Component {
         lubricationCheckGood: true,
         documentationCheckGood: true,
         tiresCheckGood: true
-      }
+      },
+      brakeFile: '',
+      airSysFile: ''
     };
   }
 
@@ -60,7 +64,7 @@ class InspectionPage extends Component {
     let value = event.target.value;
     const name = event.target.name;
     this.setState({
-      [name]: value
+      [name]: value.toUpperCase()
     });
   };
 
@@ -68,7 +72,7 @@ class InspectionPage extends Component {
     const { chassis } = { ...this.state };
     const currentState = chassis;
     const { name, value } = event.target;
-    currentState[name] = value;
+    currentState[name] = value.toUpperCase();
     this.setState({ chassis: currentState });
   };
 
@@ -80,11 +84,81 @@ class InspectionPage extends Component {
     this.setState({ inspection: currentState });
   };
 
+  singleFileChangedHandler = event => {
+    this.setState({
+      selectedFile: event.target.files[0]
+    });
+  };
+
+  singleFileUploadHandler = event => {
+    const data = new FormData();
+    // If file selected
+    if (this.state.selectedFile) {
+      data.append(
+        'chassisImage',
+        this.state.selectedFile,
+        this.state.selectedFile.name
+      );
+      axios
+        .post('/upload', data, {
+          headers: {
+            accept: 'application/json',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+          }
+        })
+        .then(response => {
+          if (200 === response.status) {
+            // If file size is larger than expected.
+            if (response.data.error) {
+              if ('LIMIT_FILE_SIZE' === response.data.error.code) {
+                this.ocShowAlert('Max size: 2MB', 'red');
+              } else {
+                console.log(response.data);
+                // If not the given file type
+                this.ocShowAlert(response.data.error, 'red');
+              }
+            } else {
+              // Success
+              let fileName = response.data;
+              console.log('fileName', fileName);
+              this.ocShowAlert('File Uploaded', '#3089cf');
+            }
+          }
+        })
+        .catch(error => {
+          // If another error
+          this.ocShowAlert(error, 'red');
+        });
+    } else {
+      // if file not selected throw error
+      this.ocShowAlert('Please upload file', 'red');
+    }
+  };
+
+  // ShowAlert Function
+  ocShowAlert = (message, background = '#3089cf') => {
+    let alertContainer = document.querySelector('#oc-alert-container'),
+      alertEl = document.createElement('div'),
+      textNode = document.createTextNode(message);
+    alertEl.setAttribute('class', 'oc-alert-pop-up');
+    // $(alertEl).css('background', background);
+    alertEl.appendChild(textNode);
+    alertContainer.appendChild(alertEl);
+    setTimeout(function() {
+      // $(alertEl).fadeOut('slow');
+      // $(alertEl).remove();
+    }, 3000);
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
+    // API.savePictures(this.state).then(() => {
+    //   // })
     API.saveForm(this.state).then(() => {
       this.setState({
+        loading: true,
         IEPname: '',
         IEPaddressField: '',
         chassis: {
@@ -119,13 +193,16 @@ class InspectionPage extends Component {
         }
       });
     });
+    // });
   };
 
   render() {
+    // console.log(this.state);
+    const { loading } = this.state.loading;
     return (
       <Container>
+        <div id='oc-alert-container' />
         <Row>
-          <Col sm={12}>{/* <Header pageTag={this.state.pageTag} /> */}</Col>
           <Col sm={12}>
             <Card className='mt-4 shadow'>
               <Card.Header className='border-bottom-0 bg-secondary text-white'>
@@ -139,7 +216,11 @@ class InspectionPage extends Component {
                 </p>
               </Card.Header>
               <Card.Body>
-                <Form onSubmit={e => this.handleSubmit(e)}>
+                <Form
+                  onSubmit={e => this.handleSubmit(e)}
+                  disabled={loading}
+                  encType='multipart/form-data'
+                >
                   <Form.Row>
                     <Col sm={6}>
                       <Form.Group>
@@ -154,9 +235,6 @@ class InspectionPage extends Component {
                           onChange={this.handleHeaderInputChange}
                           value={this.state.IEPname}
                         />
-                        <Form.Control.Feedback type='invalid'>
-                          Please provide a valid information.
-                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                     <Col sm={6}>
@@ -166,14 +244,12 @@ class InspectionPage extends Component {
                         </Form.Label>
                         <Form.Control
                           type='text'
-                          placeholder='Enter Owner / IEP Address'
+                          placeholder='Enter Owner/IEP Address including City, State and Zip'
+                          required
                           name='IEPaddressField'
                           onChange={this.handleHeaderInputChange}
                           value={this.state.IEPaddressField}
                         />
-                        <Form.Control.Feedback type='invalid'>
-                          Please provide a valid information.
-                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                   </Form.Row>
@@ -187,31 +263,25 @@ class InspectionPage extends Component {
                           type='text'
                           placeholder='Enter Unit Number'
                           name='unitNumber'
-                          // required
+                          required
                           onChange={this.handleChassisInputChange}
                           value={this.state.chassis.unitNumber}
                         />
-                        <Form.Control.Feedback type='invalid'>
-                          Please provide a valid information.
-                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                     <Col sm={4}>
                       <Form.Group>
                         <Form.Label>
-                          <strong>License</strong>
+                          <strong>License Plate</strong>
                         </Form.Label>
                         <Form.Control
                           type='text'
                           placeholder='Enter License'
                           name='license'
-                          // required
+                          required
                           onChange={this.handleChassisInputChange}
                           value={this.state.chassis.license}
                         />
-                        <Form.Control.Feedback type='invalid'>
-                          Please provide a valid information.
-                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                     <Col sm={2}>
@@ -220,16 +290,65 @@ class InspectionPage extends Component {
                           <strong>State</strong>
                         </Form.Label>
                         <Form.Control
-                          type='text'
+                          as='select'
                           placeholder='Enter State'
                           name='licensestate'
                           // required
                           onChange={this.handleChassisInputChange}
                           value={this.state.chassis.licensestate}
-                        />
-                        <Form.Control.Feedback type='invalid'>
-                          Please provide a valid information.
-                        </Form.Control.Feedback>
+                        >
+                          <option />
+                          <option>AL</option>
+                          <option>AK</option>
+                          <option>AZ</option>
+                          <option>AR</option>
+                          <option>CA</option>
+                          <option>CO</option>
+                          <option>CT</option>
+                          <option>DE</option>
+                          <option>FL</option>
+                          <option>GA</option>
+                          <option>HI</option>
+                          <option>ID</option>
+                          <option>IL</option>
+                          <option>IN</option>
+                          <option>IA</option>
+                          <option>KS</option>
+                          <option>KY</option>
+                          <option>LA</option>
+                          <option>ME</option>
+                          <option>MD</option>
+                          <option>MA</option>
+                          <option>MI</option>
+                          <option>MN</option>
+                          <option>MS</option>
+                          <option>MO</option>
+                          <option>MT</option>
+                          <option>NE</option>
+                          <option>NV</option>
+                          <option>NH</option>
+                          <option>NJ</option>
+                          <option>NM</option>
+                          <option>NY</option>
+                          <option>NC</option>
+                          <option>ND</option>
+                          <option>OH</option>
+                          <option>OK</option>
+                          <option>OR</option>
+                          <option>PA</option>
+                          <option>RI</option>
+                          <option>SC</option>
+                          <option>SD</option>
+                          <option>TN</option>
+                          <option>TX</option>
+                          <option>UT</option>
+                          <option>VT</option>
+                          <option>VA</option>
+                          <option>WA</option>
+                          <option>WV</option>
+                          <option>WI</option>
+                          <option>WY</option>
+                        </Form.Control>
                       </Form.Group>
                     </Col>
                     <Col sm={6}>
@@ -243,11 +362,8 @@ class InspectionPage extends Component {
                           name='licenseExp'
                           // required
                           onChange={this.handleChassisInputChange}
-                          value={this.state.licenseExp}
+                          value={this.state.chassis.licenseExp}
                         />
-                        <Form.Control.Feedback type='invalid'>
-                          Please provide a valid information.
-                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
 
@@ -396,6 +512,17 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.brakeComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='brakeFile'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={this.singleFileUploadHandler}
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
@@ -1053,6 +1180,7 @@ class InspectionPage extends Component {
                   </Container>
                   <br />
                   <div className='d-flex justify-content-end'>
+                    {loading && <i className='fa fa-refresh fa-spin' />}
                     <Button
                       varient='danger'
                       type='submit'

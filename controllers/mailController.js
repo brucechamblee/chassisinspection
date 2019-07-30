@@ -80,7 +80,7 @@ module.exports = {
 
       let mailOptions = {
         from: 'elitechassis@dorseytire.com',
-        to: 'bc@dorseytire.com',
+        to: `${IEPObject.emailAddress}`,
         replyTo: 'elitechassis@dorseytire.com',
         subject: `Status Report for Chassis#${IEPObject.chassis.unitNumber}`,
         text: 'Test Email Again',

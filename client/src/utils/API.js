@@ -30,5 +30,10 @@ export default {
   emailForm: function(data) {
     // console.log('This is the email submit' + data); //this is the email submit console
     return ajax.post('/api/inspection/email', data);
+  },
+
+  savePictures: function(data) {
+    console.log(data);
+    return ajax.post('/upload', data);
   }
 };

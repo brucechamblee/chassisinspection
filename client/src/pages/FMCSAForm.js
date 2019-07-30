@@ -11,13 +11,17 @@ import Badge from 'react-bootstrap/Badge';
 import API from '../utils/API';
 import AccordionToggle from 'react-bootstrap/AccordionToggle';
 import AccordionCollapse from 'react-bootstrap/AccordionCollapse';
+import { BrowserRouter as Redirect } from 'react-router-dom';
+// import SearchIEPPage from '../pages/SearchIEPPage';
 
 class FMCSAPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      redirect: false,
       pageTag: 'Chassis Inspection Form',
+      emailAddress: '',
       IEPname: '',
       IEPaddressField: '',
       chassis: {
@@ -53,11 +57,22 @@ class FMCSAPage extends Component {
     };
   }
 
-  // searchId = this.props.match.params.id;
+  handleHeaderInputChange = event => {
+    let value = event.target.value;
+    const name = event.target.name;
+    this.setState({
+      [name]: value.toLowerCase()
+    });
+  };
+
+  redirectHandler() {
+    return this.setState({
+      redirect: true
+    });
+  }
 
   componentDidMount() {
     this.IEPDetail(this.props.match.params.id);
-    console.log('This is Query String');
   }
 
   IEPDetail(searchId) {
@@ -70,13 +85,18 @@ class FMCSAPage extends Component {
 
   handleEmail = event => {
     event.preventDefault();
-    // console.log(this.state);
+    console.log(this.state);
     API.emailForm(this.state).then(() => {
       this.setState({});
     });
+    this.redirectHandler();
   };
 
   render() {
+    const redirect = this.state.redirect;
+    if (redirect === true) {
+      return <Redirect to='/searchiep' push />;
+    }
     return (
       <Container>
         <Row>
@@ -131,7 +151,7 @@ class FMCSAPage extends Component {
                     <Col sm={4}>
                       <Form.Group>
                         <Form.Label>
-                          <strong>License</strong>
+                          <strong>License Plate</strong>
                         </Form.Label>
                         <Form.Control
                           value={this.state.chassis.license}
@@ -479,7 +499,7 @@ class FMCSAPage extends Component {
                           >
                             <h4>ELECTRCIAL / LIGHTING/ CONSPICUITY DEVICES</h4>
                             <Badge pill variant='secondary'>
-                              details
+                              inspected details
                             </Badge>
                           </AccordionToggle>
                           <AccordionCollapse eventKey='0'>
@@ -853,16 +873,38 @@ class FMCSAPage extends Component {
                     </Form.Row>
                   </Container>
                   <br />
-                  <div className='d-flex justify-content-end'>
-                    <Button
-                      varient='danger'
-                      type='submit'
-                      size='lg'
-                      className='shadow'
-                    >
-                      Email Form
-                    </Button>
-                  </div>
+                  <Form.Row>
+                    <Col sm={6}>
+                      <Form.Group>
+                        <Form.Label>
+                          <strong>Email Address</strong>
+                        </Form.Label>
+                        <Form.Control
+                          type='email'
+                          placeholder='Enter Email to Send Form to'
+                          name='emailAddress'
+                          required
+                          onChange={this.handleHeaderInputChange}
+                          value={this.state.emailAddress}
+                        />
+                        <Form.Control.Feedback type='invalid'>
+                          Please provide a valid information.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col sm={6}>
+                      <div className='d-flex justify-content-end'>
+                        <Button
+                          varient='danger'
+                          type='submit'
+                          size='lg'
+                          className='shadow'
+                        >
+                          Email Form
+                        </Button>
+                      </div>
+                    </Col>
+                  </Form.Row>
                 </Form>
               </Card.Body>
             </Card>
