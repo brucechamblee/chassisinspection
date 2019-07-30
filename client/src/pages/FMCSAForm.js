@@ -22,6 +22,9 @@ class FMCSAPage extends Component {
       redirect: false,
       pageTag: 'Chassis Inspection Form',
       emailAddress: '',
+      selectedFile: null,
+      selectedFiles: null,
+      loading: false,
       IEPname: '',
       IEPaddressField: '',
       chassis: {
@@ -53,7 +56,17 @@ class FMCSAPage extends Component {
         lubricationCheckGood: true,
         documentationCheckGood: true,
         tiresCheckGood: true
-      }
+      },
+      brakePic: '',
+      airSysPic: '',
+      suspensionPic: '',
+      couplingPic: '',
+      electricalPic: '',
+      framePic: '',
+      wheelPic: '',
+      lubricationPic: '',
+      documentationPic: '',
+      tiresPic: ''
     };
   }
 
@@ -95,7 +108,7 @@ class FMCSAPage extends Component {
   render() {
     const redirect = this.state.redirect;
     if (redirect === true) {
-      return <Redirect to='/searchiep' push />;
+      return <Redirect to='/' />;
     }
     return (
       <Container>
@@ -290,6 +303,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.brakePic}
+                            alt='brakePic'
+                          />
                         </Col>
                       ) : (
                         ''
@@ -351,6 +369,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.airSysPic}
+                            alt='airSysPic'
+                          />
                         </Col>
                       ) : (
                         ''
@@ -412,6 +435,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.suspensionPic}
+                            alt='suspensionPic'
+                          />
                         </Col>
                       ) : (
                         ''
@@ -478,6 +506,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.couplingPic}
+                            alt='couplingPic'
+                          />
                         </Col>
                       ) : (
                         ''
@@ -542,6 +575,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.electricalPic}
+                            alt='electricalPic'
+                          />
                         </Col>
                       ) : (
                         ''
@@ -609,6 +647,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.framePic}
+                            alt='framePic'
+                          />
                         </Col>
                       ) : (
                         ''
@@ -670,6 +713,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.wheelPic}
+                            alt='wheelPic'
+                          />
                         </Col>
                       ) : (
                         ''
@@ -733,6 +781,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.documentationPic}
+                            alt='documentationPic'
+                          />
                         </Col>
                       ) : (
                         ''
@@ -805,6 +858,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.documentationPic}
+                            alt='documentationPic'
+                          />
                         </Col>
                       ) : (
                         ''
@@ -866,6 +924,11 @@ class FMCSAPage extends Component {
                               readOnly
                             />
                           </Form.Group>
+                          <img
+                            className='img-thumbnail'
+                            src={this.state.tiresPic}
+                            alt='tiresPic'
+                          />
                         </Col>
                       ) : (
                         ''

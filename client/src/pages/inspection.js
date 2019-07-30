@@ -12,7 +12,6 @@ import API from '../utils/API';
 import AccordionToggle from 'react-bootstrap/AccordionToggle';
 import AccordionCollapse from 'react-bootstrap/AccordionCollapse';
 import axios from 'axios';
-// import $ from 'jquery';
 
 class InspectionPage extends Component {
   constructor(props) {
@@ -55,8 +54,16 @@ class InspectionPage extends Component {
         documentationCheckGood: true,
         tiresCheckGood: true
       },
-      brakeFile: '',
-      airSysFile: ''
+      brakePic: '',
+      airSysPic: '',
+      suspensionPic: '',
+      couplingPic: '',
+      electricalPic: '',
+      framePic: '',
+      wheelPic: '',
+      lubricationPic: '',
+      documentationPic: '',
+      tiresPic: ''
     };
   }
 
@@ -90,7 +97,8 @@ class InspectionPage extends Component {
     });
   };
 
-  singleFileUploadHandler = event => {
+  singleFileUploadHandler = (event, stateItem) => {
+    event.preventDefault();
     const data = new FormData();
     // If file selected
     if (this.state.selectedFile) {
@@ -122,6 +130,9 @@ class InspectionPage extends Component {
               // Success
               let fileName = response.data;
               console.log('fileName', fileName);
+              this.setState({
+                [stateItem]: fileName.location
+              });
               this.ocShowAlert('File Uploaded', '#3089cf');
             }
           }
@@ -154,11 +165,12 @@ class InspectionPage extends Component {
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
-    // API.savePictures(this.state).then(() => {
-    //   // })
     API.saveForm(this.state).then(() => {
       this.setState({
-        loading: true,
+        selectedFile: null,
+        selectedFiles: null,
+        loading: false,
+        pageTag: 'Chassis Inspection Form',
         IEPname: '',
         IEPaddressField: '',
         chassis: {
@@ -190,14 +202,22 @@ class InspectionPage extends Component {
           lubricationCheckGood: true,
           documentationCheckGood: true,
           tiresCheckGood: true
-        }
+        },
+        brakePic: '',
+        airSysPic: '',
+        suspensionPic: '',
+        couplingPic: '',
+        electricalPic: '',
+        framePic: '',
+        wheelPic: '',
+        lubricationPic: '',
+        documentationPic: '',
+        tiresPic: ''
       });
     });
-    // });
   };
 
   render() {
-    // console.log(this.state);
     const { loading } = this.state.loading;
     return (
       <Container>
@@ -514,12 +534,14 @@ class InspectionPage extends Component {
                             />
                             <Form.Control
                               type='file'
-                              name='brakeFile'
+                              name='brakePic'
                               onChange={this.singleFileChangedHandler}
                             />
                             <button
                               className='btn btn-info'
-                              onClick={this.singleFileUploadHandler}
+                              onClick={event =>
+                                this.singleFileUploadHandler(event, 'brakePic')
+                              }
                             >
                               Upload
                             </button>
@@ -592,6 +614,19 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.airSysComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='airSysPic'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={event =>
+                                this.singleFileUploadHandler(event, 'airSysPic')
+                              }
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
@@ -661,6 +696,22 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.suspensionComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='suspensionPic'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={event =>
+                                this.singleFileUploadHandler(
+                                  event,
+                                  'suspensionPic'
+                                )
+                              }
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
@@ -735,6 +786,22 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.couplingComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='couplingPic'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={event =>
+                                this.singleFileUploadHandler(
+                                  event,
+                                  'couplingPic'
+                                )
+                              }
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
@@ -807,6 +874,22 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.electricalComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='electricalPic'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={event =>
+                                this.singleFileUploadHandler(
+                                  event,
+                                  'electricalPic'
+                                )
+                              }
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
@@ -882,6 +965,19 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.frameComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='framePic'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={event =>
+                                this.singleFileUploadHandler(event, 'framePic')
+                              }
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
@@ -951,6 +1047,19 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.wheelsComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='wheelPic'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={event =>
+                                this.singleFileUploadHandler(event, 'wheelPic')
+                              }
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
@@ -1022,6 +1131,22 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.lubricationComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='lubricationPic'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={event =>
+                                this.singleFileUploadHandler(
+                                  event,
+                                  'lubricationPic'
+                                )
+                              }
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
@@ -1102,6 +1227,22 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.documentationComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='documentationPic'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={event =>
+                                this.singleFileUploadHandler(
+                                  event,
+                                  'documentationPic'
+                                )
+                              }
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
@@ -1171,6 +1312,19 @@ class InspectionPage extends Component {
                               onChange={this.handleInspectionInputChange}
                               value={this.state.inspection.tiresComment}
                             />
+                            <Form.Control
+                              type='file'
+                              name='tiresPic'
+                              onChange={this.singleFileChangedHandler}
+                            />
+                            <button
+                              className='btn btn-info'
+                              onClick={event =>
+                                this.singleFileUploadHandler(event, 'tiresPic')
+                              }
+                            >
+                              Upload
+                            </button>
                           </Form.Group>
                         </Col>
                       ) : (
