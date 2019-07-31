@@ -13,6 +13,7 @@ import AccordionToggle from 'react-bootstrap/AccordionToggle';
 import AccordionCollapse from 'react-bootstrap/AccordionCollapse';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
+import { Link } from 'react-router-dom';
 
 class InspectionPage extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class InspectionPage extends Component {
       selectedFile: null,
       selectedFiles: null,
       loading: false,
+      submitted: false,
       pageTag: 'Chassis Inspection Form',
       IEPname: '',
       IEPaddressField: '',
@@ -67,13 +69,6 @@ class InspectionPage extends Component {
       tiresPic: ''
     };
   }
-
-  loadingHandler = () => {
-    this.setState({ loading: true });
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 2000);
-  };
 
   handleHeaderInputChange = event => {
     let value = event.target.value;
@@ -167,13 +162,14 @@ class InspectionPage extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.loadingHandler();
-    console.log(this.state);
+    this.setState({ loading: true });
+    // console.log(this.state);
     API.saveForm(this.state).then(() => {
       this.setState({
         selectedFile: null,
         selectedFiles: null,
-        // loading: false,
+        loading: false,
+        submitted: true,
         pageTag: 'Chassis Inspection Form',
         IEPname: '',
         IEPaddressField: '',
@@ -1344,16 +1340,22 @@ class InspectionPage extends Component {
                   </Container>
                   <br />
                   <div className='d-flex justify-content-end'>
-                    <Button
-                      varient='danger'
-                      type='submit'
-                      size='lg'
-                      className='shadow'
-                      disabled={loading}
-                    >
-                      {loading && <i className='fa fa-refresh fa-spin' />}
-                      Submit
-                    </Button>
+                    {this.state.loading ? (
+                      <Spinner animation='border' role='status'>
+                        <span className='sr-only'>Loading...</span>
+                      </Spinner>
+                    ) : this.state.submitted ? (
+                      <Link to='/search'>Go to Search Page</Link>
+                    ) : (
+                      <Button
+                        varient='danger'
+                        type='submit'
+                        size='lg'
+                        className='shadow'
+                      >
+                        Submit
+                      </Button>
+                    )}
                   </div>
                 </Form>
               </Card.Body>
