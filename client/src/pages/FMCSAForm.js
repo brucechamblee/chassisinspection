@@ -11,15 +11,14 @@ import Badge from 'react-bootstrap/Badge';
 import API from '../utils/API';
 import AccordionToggle from 'react-bootstrap/AccordionToggle';
 import AccordionCollapse from 'react-bootstrap/AccordionCollapse';
-import { BrowserRouter as Redirect } from 'react-router-dom';
-// import SearchIEPPage from '../pages/SearchIEPPage';
+import Spinner from 'react-bootstrap/Spinner';
+import { Link } from 'react-router-dom';
 
 class FMCSAPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      redirect: false,
       pageTag: 'Chassis Inspection Form',
       emailAddress: '',
       selectedFile: null,
@@ -66,7 +65,8 @@ class FMCSAPage extends Component {
       wheelPic: '',
       lubricationPic: '',
       documentationPic: '',
-      tiresPic: ''
+      tiresPic: '',
+      mailPass: true
     };
   }
 
@@ -77,12 +77,6 @@ class FMCSAPage extends Component {
       [name]: value.toLowerCase()
     });
   };
-
-  redirectHandler() {
-    return this.setState({
-      redirect: true
-    });
-  }
 
   componentDidMount() {
     this.IEPDetail(this.props.match.params.id);
@@ -99,17 +93,13 @@ class FMCSAPage extends Component {
   handleEmail = event => {
     event.preventDefault();
     console.log(this.state);
-    API.emailForm(this.state).then(() => {
-      this.setState({});
+    this.setState({ loading: true });
+    API.emailForm(this.state).then(res => {
+      this.setState({ mailPass: res.data, loading: false });
     });
-    this.redirectHandler();
   };
 
   render() {
-    const redirect = this.state.redirect;
-    if (redirect === true) {
-      return <Redirect to='/' />;
-    }
     return (
       <Container>
         <Row>
@@ -957,14 +947,22 @@ class FMCSAPage extends Component {
                     </Col>
                     <Col sm={6}>
                       <div className='d-flex justify-content-end'>
-                        <Button
-                          varient='danger'
-                          type='submit'
-                          size='lg'
-                          className='shadow'
-                        >
-                          Email Form
-                        </Button>
+                        {this.state.loading ? (
+                          <Spinner animation='border' role='status'>
+                            <span className='sr-only'>Loading...</span>
+                          </Spinner>
+                        ) : !this.state.mailPass ? (
+                          <Link to='/search'>Go to Search Page</Link>
+                        ) : (
+                          <Button
+                            varient='danger'
+                            type='submit'
+                            size='lg'
+                            className='shadow'
+                          >
+                            Email Form
+                          </Button>
+                        )}
                       </div>
                     </Col>
                   </Form.Row>

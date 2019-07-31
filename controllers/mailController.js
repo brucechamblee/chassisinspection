@@ -122,6 +122,7 @@ module.exports = {
         }
         console.log('Message sent: %s', info.messageId);
         console.log('Message URL: %s', nodemailer.getTestMessageUrl(info));
+        res.send(nodemailer.getTestMessageUrl(info));
       });
     });
   }

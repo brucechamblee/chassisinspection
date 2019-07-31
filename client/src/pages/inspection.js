@@ -12,6 +12,7 @@ import API from '../utils/API';
 import AccordionToggle from 'react-bootstrap/AccordionToggle';
 import AccordionCollapse from 'react-bootstrap/AccordionCollapse';
 import axios from 'axios';
+import Spinner from 'react-bootstrap/Spinner';
 
 class InspectionPage extends Component {
   constructor(props) {
@@ -66,6 +67,13 @@ class InspectionPage extends Component {
       tiresPic: ''
     };
   }
+
+  loadingHandler = () => {
+    this.setState({ loading: true });
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 2000);
+  };
 
   handleHeaderInputChange = event => {
     let value = event.target.value;
@@ -133,7 +141,6 @@ class InspectionPage extends Component {
               this.setState({
                 [stateItem]: fileName.location
               });
-              this.ocShowAlert('File Uploaded', '#3089cf');
             }
           }
         })
@@ -153,23 +160,20 @@ class InspectionPage extends Component {
       alertEl = document.createElement('div'),
       textNode = document.createTextNode(message);
     alertEl.setAttribute('class', 'oc-alert-pop-up');
-    // $(alertEl).css('background', background);
     alertEl.appendChild(textNode);
     alertContainer.appendChild(alertEl);
-    setTimeout(function() {
-      // $(alertEl).fadeOut('slow');
-      // $(alertEl).remove();
-    }, 3000);
+    setTimeout(function() {}, 3000);
   };
 
   handleSubmit = event => {
     event.preventDefault();
+    this.loadingHandler();
     console.log(this.state);
     API.saveForm(this.state).then(() => {
       this.setState({
         selectedFile: null,
         selectedFiles: null,
-        loading: false,
+        // loading: false,
         pageTag: 'Chassis Inspection Form',
         IEPname: '',
         IEPaddressField: '',
@@ -218,10 +222,17 @@ class InspectionPage extends Component {
   };
 
   render() {
-    const { loading } = this.state.loading;
+    const { loading } = this.state;
     return (
       <Container>
         <div id='oc-alert-container' />
+        {this.state.loading ? (
+          <Spinner animation='border' role='status'>
+            <span className='sr-only'>Loading...</span>
+          </Spinner>
+        ) : (
+          ''
+        )}
         <Row>
           <Col sm={12}>
             <Card className='mt-4 shadow'>
@@ -238,7 +249,6 @@ class InspectionPage extends Component {
               <Card.Body>
                 <Form
                   onSubmit={e => this.handleSubmit(e)}
-                  disabled={loading}
                   encType='multipart/form-data'
                 >
                   <Form.Row>
@@ -1334,13 +1344,14 @@ class InspectionPage extends Component {
                   </Container>
                   <br />
                   <div className='d-flex justify-content-end'>
-                    {loading && <i className='fa fa-refresh fa-spin' />}
                     <Button
                       varient='danger'
                       type='submit'
                       size='lg'
                       className='shadow'
+                      disabled={loading}
                     >
+                      {loading && <i className='fa fa-refresh fa-spin' />}
                       Submit
                     </Button>
                   </div>
